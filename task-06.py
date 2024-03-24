@@ -5,6 +5,11 @@ class ExceptionWrongPhone(Exception):
         self.number = number
         super().__init__(f"Неправильний номер телефону: {number}")
 
+class ExceptionEmptyName(Exception):
+    def __init__(self, Name):
+        self.name = Name
+        super().__init__(f"Пусте ім'я")
+
 class Field:
     def __init__(self, value):
         self.value = value
@@ -14,11 +19,11 @@ class Field:
 
 class Name(Field):
     # реалізація класу
-    def name_string(self, name):
-        return name
-
-    def name_phone(self, phone):
-        return phone
+    def validate_name(self, Name):
+        if len(Name)==0:
+            return ExceptionEmptyName(Name)
+        else:
+            return Name
 
 class Phone(Field):
     # Реалізовано валідацію номера телефону (має бути перевірка на 10 цифр).
@@ -38,7 +43,7 @@ class Phone(Field):
     
 class Record:
     def __init__(self, name):
-        self.name = Name(name)
+        self.name = Name(Name.validate_name(self, name))
         self.phones = []
 
     # реалізація класу
@@ -87,4 +92,3 @@ class AddressBook(UserDict):
             if user_name.value == name:
                 del self.data[record.name]
                 break
-
