@@ -82,13 +82,16 @@ class AddressBook(UserDict):
         self.data[record.name] = record
 
     def find(self, name):
+        check_name = Name.validate_name(self, name)
         for user_name, record in self.data.items():
             if user_name.value == name:
                 return record
         return None
 
     def delete(self, name):
+        check_name = Name.validate_name(self, name)
         for user_name, record in self.data.items():
             if user_name.value == name:
                 del self.data[record.name]
                 break
+
