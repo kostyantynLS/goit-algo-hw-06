@@ -7,7 +7,7 @@ class Field:
         else:
             raise ValueError
         
-    def __is_valid(self, value):
+    def __is_valid(value):
         return True
 
     def __str__(self):
@@ -36,7 +36,7 @@ class Phone(Field):
         else:
             raise ValueError
 
-    def __is_valid(self,value):
+    def __is_valid(self, value):
         if value.isdigit() and len(value) == 10:
             return True
         raise ValueError
@@ -77,10 +77,9 @@ class Record:
     def find_phone(self, phone):
 #метод  find_phone  має повертати або об'єкт, або None. Ніяких рядків.
         f = Phone(phone)
-        for user_phones in self.phones:
-            if f.value in user_phones:
-                #return self.phones[self.phones.index(phone)]
-                return self.phones
+        for user_phone in self.phones:
+            if f.value == user_phone:
+                return user_phone            
         return None
 
 # --------------------
