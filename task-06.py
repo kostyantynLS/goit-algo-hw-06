@@ -40,31 +40,25 @@ class Phone(Field):
         if value.isdigit() and len(value) == 10:
             return True
         raise ValueError
-
-    # реалізація класу
-    def __str__(self):
-        return f"Contact name: {self.name.value}, phones: {'; '.join(p.value for p in self.phones)}"
     
 class Record:
     def __init__(self, name):
         self.name = Name(name)
         self.phones = []
 
-    # реалізація класу
-
     def __str__(self):
-        return f"Contact name: {self.name.value}, phones: {'; '.join(p for p in self.phones)}"
+        return f"Contact name: {self.name.value}, phones: {'; '.join(p.value for p in self.phones)}"
 
 # Реалізовано зберігання об'єкта Name в окремому атрибуті.
 # Реалізовано зберігання списку об'єктів Phone в окремому атрибуті.
     def add_phone(self, phone):
-        f = Phone(phone)
-        self.phones.append(f.value)
+        my_phone = Phone(phone)         # я сам в шоці що зберігав тільки значення, а не об'єкт
+        self.phones.append(my_phone)
 
     def remove_phone(self, phone):
         f = Phone(phone)
         for user_phone in self.phones:
-            if user_phone in f.value:
+            if user_phone.value == f.value:
                 del self.phones[self.phones.index(user_phone)]
 
     def edit_phone(self, old_phone, new_phone):
@@ -78,7 +72,7 @@ class Record:
 #метод  find_phone  має повертати або об'єкт, або None. Ніяких рядків.
         f = Phone(phone)
         for user_phone in self.phones:
-            if f.value == user_phone:
+            if f.value == user_phone.value:
                 return user_phone            
         return None
 
